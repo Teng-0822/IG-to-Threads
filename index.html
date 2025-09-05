@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profiles</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+    h2 {
+      margin: 20px;
+      color: #333;
+      font-size: 22px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .card p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #444;
+    }
+    button {
+      margin: 5px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 25px;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover { opacity: 0.85; }
+    button:active { transform: scale(0.97); }
+
+    .nav-buttons, .copy-buttons {
+      margin-bottom: 10px;
+    }
+
+    /* Floating refresh button */
+    .refresh-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff6f61;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Profile Viewer</h2>
+  <div class="card" id="profileCard">
+    <p><b>Username:</b> <span id="username"></span></p>
+    <p><b>Password:</b> <span id="password"></span></p>
+    <p><b>ID:</b> <span id="userid"></span></p>
+    <p><b>Status:</b> <span id="status"></span></p>
+  </div>
+  <div class="nav-buttons">
+    <button onclick="prevProfile()">⏮ Previous</button>
+    <button onclick="nextProfile()">Next ⏭</button>
+  </div>
+  <div class="copy-buttons">
+    <button onclick="copyText('username')">📋 Copy Username</button>
+    <button onclick="copyText('password')">📋 Copy Password</button>
+  </div>
+
+  <button class="refresh-btn" onclick="refreshData()">⟳</button>
+
+  <script>
+    let profiles = [];
+    let currentIndex = 0;
+
+    async function loadData() {
+      const url = "https://script.google.com/macros/s/AKfycbwbf58nf0rYmQTpIfH6vRGSK6mJ7PglwIYBRAZPBP8j16W_ZcP3fv6MO3RW8Wbd1QZckQ/exec"; // replace with your deployed Apps Script URL
+      const res = await fetch(url);
+      profiles = await res.json();
+      currentIndex = 0;
+      showProfile(currentIndex);
+    }
+
+    function showProfile(index) {
+      if (profiles.length === 0) return;
+      const p = profiles[index];
+      document.getElementById("username").innerText = p.username;
+      document.getElementById("password").innerText = p.password;
+      document.getElementById("userid").innerText = p.id;
+      document.getElementById("status").innerText = p.status;
+    }
+
+    function nextProfile() {
+      if (currentIndex < profiles.length - 1) {
+        currentIndex++;
+        showProfile(currentIndex);
+      }
+    }
+
+    function prevProfile() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showProfile(currentIndex);
+      }
+    }
+
+    function copyText(field) {
+      const text = document.getElementById(field).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert(field.charAt(0).toUpperCase() + field.slice(1) + " copied!");
+      });
+    }
+
+    function refreshData() {
+      loadData();
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
