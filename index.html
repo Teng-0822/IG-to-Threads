@@ -143,17 +143,13 @@
     }
 
     function openIG() {
-      const username = document.getElementById("username").innerText;
-      if (username) {
-        window.open(`https://www.instagram.com/${username}`, "_blank");
-      }
+     // Open Instagram app if installed
+      window.location.href = "instagram://app";
     }
 
     function openThreads() {
-      const username = document.getElementById("username").innerText;
-      if (username) {
-        window.open(`https://www.threads.net/@${username}`, "_blank");
-      }
+     // Open Threads app if installed
+      window.location.href = "threads://app";
     }
     loadData();
   </script>
