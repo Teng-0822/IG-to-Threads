@@ -86,7 +86,11 @@
     <button onclick="copyText('username')">📋 Copy Username</button>
     <button onclick="copyText('password')">📋 Copy Password</button>
   </div>
-
+  <div class="copy-buttons">
+    <button style="background:#833AB4" onclick="openIG()">📱 Open IG</button>
+    <button style="background:#000" onclick="openThreads()">💬 Open Threads</button>
+  </div>
+  
   <button class="refresh-btn" onclick="refreshData()">⟳</button>
 
   <script>
@@ -138,6 +142,19 @@
       loadData();
     }
 
+    function openIG() {
+      const username = document.getElementById("username").innerText;
+      if (username) {
+        window.open(`https://www.instagram.com/${username}`, "_blank");
+      }
+    }
+
+    function openThreads() {
+      const username = document.getElementById("username").innerText;
+      if (username) {
+        window.open(`https://www.threads.net/@${username}`, "_blank");
+      }
+    }
     loadData();
   </script>
 </body>
