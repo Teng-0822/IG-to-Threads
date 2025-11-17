@@ -82,6 +82,10 @@
     <button onclick="prevProfile()">⏮ Previous</button>
     <button onclick="nextProfile(); runNextContainer()">Next ⏭</button>
   </div>
+  <div class="nav-buttons">
+    <button onclick="runCreatecon()">Container</button>
+    <button onclick="nextProfile()">⏭ ⏭ ⏭</button>
+  </div>
   <div class="copy-buttons">
     <button onclick="copyText('username')">📋 User</button>
     <button onclick="copyText('password')">📋 Pass</button>
@@ -96,6 +100,9 @@
   <script>
     function runNextContainer() {
     window.location.href = "shortcuts://run-shortcut?name=NextIGTH";
+  }
+    function runCreatecon() {
+    window.location.href = "shortcuts://run-shortcut?name=CreateIGCon";
   }
     let profiles = [];
     let currentIndex = 0;
